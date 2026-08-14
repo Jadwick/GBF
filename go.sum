@@ -1,0 +1,6 @@
+github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=
+github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
+github.com/nine-lives-later/go-xdelta v0.3.2-0.20240223150210-635f2e083f65 h1:VgQvp9UAKnhp0ToGbVMD53wWOgxwf19AhwnN7Lzw7sA=
+github.com/nine-lives-later/go-xdelta v0.3.2-0.20240223150210-635f2e083f65/go.mod h1:uFQzElLkPDY5XVZWBJxDXaymJk/IrWZnq4uEl8rxaVg=
+github.com/shadowspore/fossil-delta v0.0.0-20241213113458-1d797d70cbe3 h1:/4/IJi5iyTdh6mqOUaASW148HQpujYiHl0Wl78dSOSc=
+github.com/shadowspore/fossil-delta v0.0.0-20241213113458-1d797d70cbe3/go.mod h1:aJIMhRsunltJR926EB2MUg8qHemFQDreSB33pyto2Ps=
