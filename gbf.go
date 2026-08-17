@@ -22,7 +22,7 @@ const DATADIR = "gbf_data"
 const MODDIR = "GNX_mods"
 const CHECKSUMFILE = "checksums.json"
 const CONFIGFILE = "config.json"
-const GBF_VERSION = "1.0.0"
+const GBF_VERSION = "1.0.1"
 
 var latestVersions = make(map[string]string)
 var checksums = make(map[string]string)
@@ -54,7 +54,7 @@ func main() {
 	urls["itch_1.3.11"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11_gn1.33_itch.fossil"
 	urls["steam_1.3.11"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11_gn1.33_steam.fossil"
 	
-	config["updateurl"] = "https://raw.githubusercontent.com/Jadwick/GNX-Delta-Archive/refs/heads/master/gbf/checksums.json"
+	config["updateurl"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/gbf/checksums.json"
 	initialize()
 	home()
 }
