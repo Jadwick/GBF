@@ -1,17 +1,15 @@
 //go:build windows
 package main
 
-import "fmt"
 import "os"
 import "os/exec"
 
 func doesTerminalSupportColor() bool {
 	// Check if a powershell variable is set in Env
-    s, b := os.LookupEnv("PsModulePath")
-	fmt.Println(s)
+    _, b := os.LookupEnv("PsModulePath")
     return b
 }
 
 func systemClearscreen() {
-	exec.Command("cmd", "/C", "cls")
+	exec.Command("cmd", "/c", "cls")
 }

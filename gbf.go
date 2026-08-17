@@ -144,7 +144,7 @@ func installGNX() {
 	}
 	id, ok := checksums[hash]
 	if(ok == false) {
-		showErrorExit("Install failed: Cannot determine install version. Are you using an unmodified data.win?")
+		showErrorExit("Install failed: Cannot determine install version. Are you using an unmodified data.win?\nOr was there an update recently?")
 	}
 	var ver string = ""
 	for k, v := range latestVersions {
@@ -155,7 +155,10 @@ func installGNX() {
 	}
 	if(ver == "") { //if ver is empty, something needs updating
 		if(strings.Contains(id, "original")) {
-			showErrorExit("Install failed: Goblin Nest out-of-date. Please update to latest version. (Through Steam or Itch.io)")
+			printFormattedln(Red, false, false, "Install failed: Goblin Nest version mismatch.")
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "Have: ", id))
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "Need: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
+			showErrorExit("Upgrade or downgrade to required version to install GNX (Through Steam or Itch.io)")
 		} else {
 			printFormattedln(Red, false, false, "Old GNX version found. Switching to update.")
 				waitForEnterKey()
@@ -293,7 +296,7 @@ func updateGNX() {
 	}
 	id, ok := checksums[hash]
 	if(ok == false) {
-		showErrorExit("Install failed: Cannot determine install version. Are you using an unmodified data.win?")
+		showErrorExit("Install failed: Cannot determine install version. Are you using an unmodified data.win?\nOr was there an update recently?")
 	}
 	var ver string = ""
 	for k, v := range latestVersions {
@@ -316,7 +319,10 @@ func updateGNX() {
 	}
 	if(ver == "") { //if ver is empty, something needs updating
 		if(strings.Contains(id, "original")) {
-			showErrorExit("Install failed: Goblin Nest out-of-date. Please update to latest version. (Through Steam or Itch.io)")
+			printFormattedln(Red, false, false, "Update failed: Goblin Nest version mismatch.")
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "Have: ", id))
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "Need: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
+			showErrorExit("Upgrade or downgrade to required version to install GNX (Through Steam or Itch.io)")
 		}
 	}
 	printFormattedln(Green, false, false, "data.win OK")

@@ -1,10 +1,9 @@
-//go:build linux
+//go:build darwin
 package main
 
 import "os/exec"
 
 func doesTerminalSupportColor() bool {
-    //sure they do???
 	return true
 }
 
