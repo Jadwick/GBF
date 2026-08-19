@@ -1,6 +1,4 @@
+.gitignore
 gbf_data/
 GNX_mods/
 bin/
-data.win
-GBF
-GBF.exe

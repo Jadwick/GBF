@@ -11,8 +11,8 @@ import "net/http"
 import "errors"
 import "path/filepath"
 import "archive/zip"
-import "encoding/json"
 import "crypto/sha256"
+import "encoding/json"
 
 func exists(path string) (bool, error){
 	_, err := os.Stat(path)
@@ -44,7 +44,7 @@ func downloadFile(filepath string, url string) (err error) {
 		return file_err;
 	}
 	defer out.Close()
-	
+
 	resp, url_err := http.Get(url)
 	if(url_err != nil) {
 		out.Close()
@@ -57,14 +57,14 @@ func downloadFile(filepath string, url string) (err error) {
 		return errors.New("HTTP failed GET StatusCode: " + strconv.Itoa(resp.StatusCode))
 	}
 	defer resp.Body.Close()
-	
+
 	_, io_err := io.Copy(out, resp.Body)
 	if (io_err != nil) {
 		out.Close()
 		os.Remove(newfile)
 		return io_err
 	}
-	
+
 	resp.Body.Close()
 	out.Close()
 	// everything worked, so rename the files and remove the old one
@@ -139,9 +139,37 @@ func unzip(src, dest string) error {
     return nil
 }
 
+func trimUrl(url string) string {
+	//remove everything before the last slash
+	re := regexp.MustCompile(`[^\/]+$`)
+	trimmed := re.FindString(url)
+	//remove anything after the first '?'
+	re = regexp.MustCompile(`^[^\?]+`)
+	trimmed = re.FindString(trimmed)
+	return trimmed
+}
+
+func getDataSHA256(fp string) (string, error) {
+	file, err := os.Open(fp)
+	if(err != nil) {
+		file.Close()
+		return "", err
+	}
+	defer file.Close()
+
+	hash := sha256.New()
+	_, err = io.Copy(hash, file)
+	if(err != nil) {
+		file.Close()
+		return "", err
+	}
+	file.Close()
+	return fmt.Sprintf("%x", hash.Sum(nil)), nil
+}
+
 func updateChecksums() bool {
 	printFormattedln(Green, false, false, "Attempting to download new checksums...")
-	err := downloadFile(filepath.Join(DATADIR, CHECKSUMFILE), config["updateurl"])
+	err := downloadFile(filepath.Join(relDataDir, CHECKSUMFILE), config["updateurl"])
 	if (err != nil) {
 		printFormattedln(Red, false, false, "Failed to download new checksums")
 		printFormattedln(Red, false, false, err.Error())
@@ -153,7 +181,7 @@ func updateChecksums() bool {
 
 func parseChecksums() bool {
 	printFormattedln(Green, false, false, "Attempting to load checksum file...")
-	fileExists, exist_err := exists(filepath.Join(DATADIR, CHECKSUMFILE))
+	fileExists, exist_err := exists(filepath.Join(relDataDir, CHECKSUMFILE))
 	if(exist_err != nil) {
 		printFormattedln(Red, false, false, "Failed to read checksum file.")
 		return true
@@ -162,7 +190,7 @@ func parseChecksums() bool {
 		printFormattedln(Red, false, false, "No checksum file.")
 		return true
 	}
-	file, file_err := os.Open(filepath.Join(DATADIR, CHECKSUMFILE))
+	file, file_err := os.Open(filepath.Join(relDataDir, CHECKSUMFILE))
 	if(file_err != nil) {
 		printFormattedln(Red, false, false, "Failed to read checksum file.")
 		return true
@@ -176,7 +204,7 @@ func parseChecksums() bool {
 		printFormattedln(Purple, false, false, "Delete malformed checksum file?")
 		ret := getYesNo(true)
 		if(ret == true) {
-			os.Remove(filepath.Join(DATADIR, CHECKSUMFILE))
+			os.Remove(filepath.Join(relDataDir, CHECKSUMFILE))
 		}
 		return true
 	}
@@ -220,37 +248,9 @@ func parseChecksums() bool {
 	return false
 }
 
-func trimUrl(url string) string {
-	//remove everything before the last slash
-	re := regexp.MustCompile(`[^\/]+$`)
-	trimmed := re.FindString(url)
-	//remove anything after the first '?'
-	re = regexp.MustCompile(`^[^\?]+`)
-	trimmed = re.FindString(trimmed)
-	return trimmed
-}
-
-func getDataSHA256(fp string) (string, error) {
-	file, err := os.Open(fp)
-	if(err != nil) {
-		file.Close()
-		return "", err
-	}
-	defer file.Close()
-	
-	hash := sha256.New()
-	_, err = io.Copy(hash, file)
-	if(err != nil) {
-		file.Close()
-		return "", err
-	}
-	file.Close()
-	return fmt.Sprintf("%x", hash.Sum(nil)), nil
-}
-
 func loadConfig() bool {
 	printFormattedln(Green, false, false, "Attempting to load config file...")
-	fileExists, exist_err := exists(filepath.Join(DATADIR, CONFIGFILE))
+	fileExists, exist_err := exists(filepath.Join(relDataDir, CONFIGFILE))
 	if(exist_err != nil) {
 		printFormattedln(Red, false, false, "Failed to read config file.")
 		return true
@@ -260,7 +260,7 @@ func loadConfig() bool {
 		createConfig()
 		return true
 	}
-	file, file_err := os.Open(filepath.Join(DATADIR, CONFIGFILE))
+	file, file_err := os.Open(filepath.Join(relDataDir, CONFIGFILE))
 	if(file_err != nil) {
 		printFormattedln(Red, false, false, "Failed to read config file.")
 		return true
@@ -274,7 +274,7 @@ func loadConfig() bool {
 		printFormattedln(Purple, false, false, "Delete malformed config file?")
 		ret := getYesNo(false)
 		if(ret == true) {
-			os.Remove(filepath.Join(DATADIR, CONFIGFILE))
+			os.Remove(filepath.Join(relDataDir, CONFIGFILE))
 		}
 		return true
 	}
@@ -292,7 +292,7 @@ func loadConfig() bool {
 }
 
 func createConfig() {
-	fp := filepath.Join(DATADIR, CONFIGFILE)
+	fp := filepath.Join(relDataDir, CONFIGFILE)
 	file, file_err := os.Create(fp)
 	if(file_err != nil) {
 		os.Remove(fp)
@@ -316,5 +316,4 @@ func createConfig() {
 		return
 	}
 	file.Close()
-	
 }

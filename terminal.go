@@ -48,7 +48,7 @@ func printFormattedln(color Color, underline bool, invert bool, text string) {
 	} else {
 		fmt.Println(text)
 	}
-	
+
 }
 
 func getOption(options []string) int {
