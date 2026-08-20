@@ -6,6 +6,7 @@ Goblin's Best Friend (GBF) is a simple utility to install and manage GNX install
 GBF can:
 - Install GNX on a vanilla game
 - Update GNX if previously installed by Goblin's Best Friend
+- Auto install mods with drag and drop
 
 GBF makes a backup of the original `data.win` that it uses for updating or unisntalling GNX.
 
