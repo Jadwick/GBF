@@ -1,7 +1,6 @@
 package main
 
 import "strings"
-import "regexp"
 import "os"
 import "fmt"
 import "path/filepath"
@@ -20,6 +19,8 @@ func installGNX() {
 	if(ok == false) {
 		showErrorExit("Install failed: Cannot determine install version. Are you using an unmodified data.win?\nOr was there an update recently?")
 	}
+	msg := "Found " + id
+	printFormattedln(Green, false, false, msg)
 	var ver string = ""
 	for k, v := range latestVersions {
 		if(v == id) {
@@ -29,15 +30,33 @@ func installGNX() {
 	}
 	if(ver == "") { //if ver is empty, something needs updating
 		if(strings.Contains(id, "original")) {
-			printFormattedln(Red, false, false, "Install failed: Goblin Nest version mismatch.")
+			printFormattedln(Red, false, true, "Old Goblin Nest version found")
 			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "Have: ", id))
-			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "Need: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
-			showErrorExit("Upgrade or downgrade to required version to install GNX (Through Steam or Itch.io)")
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "Latest: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
+			gv, ok := compatable[id]
+			if(ok == true) {
+				msg := "Out-of-date GNX found for old version: " + gv
+				printFormattedln(Green, false, false, msg)
+				printFormattedln(Purple, false, false, "Install old version?")
+				ans := getYesNo(false)
+				if(ans == false) {
+					printFormattedln(Red, false, false, "User canceled install.")
+					return
+				}
+			} else {
+				showErrorExit("No GNX found for this version.")
+			}
 		} else {
-			printFormattedln(Red, false, false, "Old GNX version found. Switching to update.")
-				waitForEnterKey()
+			printFormattedln(Red, false, false, "Old GNX version found.")
+			printFormattedln(Purple, false, false, "Would you like to update?")
+			choice := getYesNo(true)
+			if(choice == true) {
 				updateGNX()
-				return
+			} else {
+				printFormattedln(Red, false, false, "User canceled update.")
+				waitForEnterKey()
+			}
+			return
 		}
 	}
 	if(strings.Contains(id, "patched")) {
@@ -47,25 +66,20 @@ func installGNX() {
 			home()
 			return
 		} else {
-			printFormattedln(Green, false, false, "GNX already installed.")
+			printFormattedln(Green, false, false, "GNX already installed and assumed up-to-date.")
 			printFormattedln(Red, false, false, "Checksums were unable to be retrieved to verify latest version.")
 			waitForEnterKey()
 			home()
 			return
 		}
 	}
-	printFormattedln(Green, false, false, "Original data.win found, attempting GNX install...")
+	printFormattedln(Green, false, false, "Attempting GNX install...")
 	var urlID string
-	if(strings.Contains(id, "steam")) {
-		re := regexp.MustCompile(`[^_]+$`)
-		gnxVer := re.FindString(latestVersions["patched_steam"])
-		urlID = "steam_" + gnxVer
-	} else if(strings.Contains(id, "itch")) {
-		re := regexp.MustCompile(`[^_]+$`)
-		gnxVer := re.FindString(latestVersions["patched_itch"])
-		urlID = "itch_" + gnxVer
-	}
 	var url string
+	urlID, ok = compatable[id]
+	if(ok == false) {
+		showErrorExit("Compatable GNX version not found.")
+	}
 	url, ok = urls[urlID]
 	if(ok == false) {
 		showErrorExit("URL to patch file wasn't located.")
@@ -130,14 +144,12 @@ func installGNX() {
 	if(err != nil) {
 		showErrorExit("data.win failed doublecheck.")
 	}
-	dcID := checksums[doublecheck]
-	if(dcID == "") {
-		showErrorExit("Patched data.win does not match hash.")
+	dcID, ok := checksums[doublecheck]
+	if(ok == false) {
+		showErrorExit("Patch failed - data.win corrupted.")
 	}
-	if !(dcID == latestVersions["patched_itch"] || dcID == latestVersions["patched_steam"]) {
-		printFormattedln(Red, false, false, "Patch did something weird.")
-	}
-	printFormattedln(Green, false, false, "Delta patch successful.")
+	msg = "GNX " + dcID + " installed."
+	printFormattedln(Green, false, false, msg)
 	printFormattedln(Green, false, false, "Checking for mod directory...")
 	b, err := exists(relModDir)
 	if(b == true) {
@@ -146,13 +158,13 @@ func installGNX() {
 		printFormattedln(Red, false, false, "Mod directory missing, creating...")
 		err := os.Mkdir(relModDir, 0755)
 		if (err != nil && !os.IsExist(err)) {
-			showErrorExit("Permission Error.")
+			printFormattedln(Red, false, false, err.Error())
 		}
 		printFormattedln(Green, false, false, "Mod directory created successfully")
 	} else {
 		printFormattedln(Red, false, true, "Unable to make 'GNX_mods' directory.")
 	}
-	printFormattedln(Green, false, true, "GNX installed successfully.")
-	printFormattedln(Purple, false, false, "Unzip mods into 'GNX_mods'.")
+	printFormattedln(Green, false, true, "GNX installed successfully")
+	printFormattedln(Purple, false, false, "Drop mods onto GBF to auto-install them.")
 	waitForEnterKey()
 }

@@ -242,6 +242,16 @@ func parseChecksums() bool {
 						}
 					}
 				}
+			case "compatable":
+				m, ok := value.(map[string]interface{})
+				if(ok == true) {
+					for id, compat := range m {
+						_, exists := compatable[id]
+						if (exists == false) {
+							compatable[id] = compat.(string)
+						}
+					}
+				}
 		}
 	}
 	file.Close()

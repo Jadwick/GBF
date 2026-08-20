@@ -45,6 +45,7 @@ func initialize() {
 	if !(gbfJsonVersion == "" || gbfJsonVersion == GBF_VERSION) {
 		hadErrors = true
 		printFormattedln(Red, false, true, "New version of GBF available. ")
+		printFormattedln(Purple, false, false, "https://github.com/Jadwick/GBF")
 	}
 	printFormattedln(Green, false, true, "GBF initialized successfully. Launching...")
 	if(hadErrors == true) {

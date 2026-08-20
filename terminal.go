@@ -66,7 +66,7 @@ func getOption(options []string) int {
 		return getOption(options)
 	}
 	if (digit > 0 && digit < i) {
-		return digit
+		return (digit - 1)
 	} else {
 		printFormattedln(Red, false, false, "Invalid, choose again.")
 		return getOption(options)

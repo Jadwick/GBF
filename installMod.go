@@ -2,6 +2,7 @@ package main
 
 import "os"
 import "github.com/google/uuid"
+import "github.com/otiai10/copy"
 import "path/filepath"
 import "io/fs"
 import "strings"
@@ -62,6 +63,7 @@ func installMod(path string) {
     var success bool = false;
     var modname string
     var modid string
+    var modversion string
 
     filepath.WalkDir(tempdir, func(path string, d fs.DirEntry, err error) error {
         if(!strings.Contains(strings.ToLower(path), "manifest.json")) {
@@ -97,6 +99,11 @@ func installMod(path string) {
                     if(ok == true) {
                         modname = s
                     }
+                case "version":
+                    s, ok := value.(string)
+                    if(ok == true) {
+                        modversion = s
+                    }
     		}
     	}
 
@@ -127,7 +134,44 @@ func installMod(path string) {
         showErrorExit("Permission Error.")
     }
     if(b == true) {
-        printFormattedln(Red, false, false, "Mod directory already exists, overwrite?")
+        //read existing manifest to compare
+        file, err := os.Open(filepath.Join(modpath, "manifest.json"))
+        if(err != nil) {
+            printFormattedln(Red, false, false, "Failed to read existing manifest.")
+        }
+        var jsonMap map[string]interface{}
+        decoder := json.NewDecoder(file)
+        err = decoder.Decode(&jsonMap)
+        if (err != nil) {
+            file.Close()
+            printFormattedln(Red, false, false, "Failed to read JSON.")
+        }
+        file.Close()
+
+        var oldname string = "Unread"
+        var oldversion string = "Unread"
+        for key, value := range jsonMap {
+    		switch key {
+                case "name":
+                    s, ok := value.(string)
+                    if(ok == true) {
+                        oldname = s
+                    }
+                case "version":
+                    s, ok := value.(string)
+                    if(ok == true) {
+                        oldversion = s
+                    }
+    		}
+    	}
+
+
+        printFormattedln(Red, false, true, "Mod directory already exists:")
+        msg := "Old: " + oldname + "  Version: " + oldversion
+        printFormattedln(Red, false, false, msg)
+        msg = "New: " + modname + "  Version: " + modversion
+        printFormattedln(Green, false, false, msg)
+        printFormattedln(Purple, false, false, "Overwrite?")
         if(getYesNo(false) == false) {
             cleandir(tempdir)
             showErrorExit("Did not install mod.")
@@ -142,7 +186,7 @@ func installMod(path string) {
     msg := "Copying mod files to: " + modpath
     printFormattedln(Green, false, false, msg)
 
-    err = os.CopyFS(modpath, os.DirFS(manifestroot))
+    err = copy.Copy(manifestroot, modpath)
     if(err != nil) {
         printFormattedln(Red, false, false, err.Error())
     }

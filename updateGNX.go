@@ -3,7 +3,6 @@ package main
 import "strings"
 import "regexp"
 import "os"
-import "fmt"
 import "path/filepath"
 import "github.com/shadowspore/fossil-delta"
 
@@ -43,28 +42,33 @@ func updateGNX() {
 	}
 	if(ver == "") { //if ver is empty, something needs updating
 		if(strings.Contains(id, "original")) {
-			printFormattedln(Red, false, false, "Update failed: Goblin Nest version mismatch.")
-			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "Have: ", id))
-			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "Need: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
-			showErrorExit("Upgrade or downgrade to required version to install GNX (Through Steam or Itch.io)")
+			printFormattedln(Red, false, false, "Vanilla Goblin Nest version found. Switching to install.")
+			waitForEnterKey()
+			installGNX()
+			return
 		}
 	}
-	printFormattedln(Green, false, false, "data.win OK")
+	msg := "Found " + id
+	printFormattedln(Green, false, false, msg)
 	printFormattedln(Green, false, false, "Checking backup data.win")
 	var backupfile string
 	var distributor string
+	var latestvanilla string
 	if(strings.Contains(id, "steam")) {
-		backupfile = (latestVersions["original_steam"] + ".win")
+		latestvanilla = latestVersions["original_steam"]
+		backupfile = (latestvanilla + ".win")
 		distributor = "steam"
 	}
 	if(strings.Contains(id, "itch")) {
-		backupfile = (latestVersions["original_itch"] + ".win")
+		latestvanilla = latestVersions["original_itch"]
+		backupfile = (latestvanilla + ".win")
 		distributor = "itch"
 	}
 	backupfilepath := filepath.Join(relDataDir, backupfile)
 	ex, _ := exists(backupfilepath)
 	if(ex == false) {
-		showErrorExit("Missing backup data.win")
+		msg := "No up-to-date data.win - Need version " + latestvanilla + " to update."
+		showErrorExit(msg)
 	}
 	oldHash, err := getDataSHA256(backupfilepath)
 	if(err != nil) {
@@ -143,7 +147,8 @@ func updateGNX() {
 	if !(dcID == latestVersions["patched_itch"] || dcID == latestVersions["patched_steam"]) {
 		printFormattedln(Red, false, false, "Patch did something weird.")
 	}
-	printFormattedln(Green, false, false, "Delta patch successful.")
+	msg = "GNX " + dcID + " installed."
+	printFormattedln(Green, false, false, msg)
 	printFormattedln(Green, false, false, "Checking for mod directory...")
 	b, err := exists(MODDIR)
 	if(b == true) {
@@ -158,7 +163,7 @@ func updateGNX() {
 	} else {
 		printFormattedln(Red, false, true, "Unable to make 'GNX_mods' directory.")
 	}
-	printFormattedln(Green, false, true, "GNX installed successfully.")
-	printFormattedln(Purple, false, false, "Unzip mods into 'GNX_mods'.")
+	printFormattedln(Green, false, true, "GNX installed successfully")
+	printFormattedln(Purple, false, false, "Drop mods onto GBF to auto-install them.")
 	waitForEnterKey()
 }
