@@ -1,10 +1,20 @@
 package main
 
 import "os"
+import "path/filepath"
 
 func initialize() {
 	var hadErrors = false;
 	clearscreen()
+	ex, err := exists(filepath.Join(relDataDir, CONFIGFILE))
+	if(err != nil) {
+		showErrorExit(err.Error())
+	}
+	if(ex == false) {
+		initialSetup()
+	}
+	bErr := loadConfig()
+	hadErrors = hadErrors || bErr
 	printFormattedln(Green, false, true, "Initializing GBF")
 
 	// ensure data.win exists in local directory
@@ -36,8 +46,6 @@ func initialize() {
 		showErrorExit("Permission Error.")
 	}
 
-	bErr := loadConfig()
-	hadErrors = hadErrors || bErr
 	bErr = updateChecksums()
 	hadErrors = hadErrors || bErr
 	bErr = parseChecksums()
@@ -51,4 +59,23 @@ func initialize() {
 	if(hadErrors == true) {
 		waitForEnterKey()
 	}
+}
+
+func initialSetup() {
+	config["usecolor"] = "true"
+	printFormattedln(Green, false, false, "Running first launch setup (one-time).")
+	printFormattedln(Purple, false, false, "Is the line above green, or do you only see weird numbers?")
+	options := make ([]string, 2)
+	options[0] = "I can see the different colors."
+	options[1] = "I can only see numbers."
+	choice := getOption(options)
+	switch choice {
+		case 0:
+			config["usecolor"] = "true"
+			printFormattedln(Green, false, false, "Terminal supports color.")
+		case 1:
+			config["usecolor"] = "false"
+			printFormattedln(Red, false, false, "Terminal does not support color.")
+	}
+	createConfig()
 }

@@ -6,7 +6,7 @@ import "strings"
 import "strconv"
 
 func clearscreen() {
-	if(useColor == true) {
+	if(config["usecolor"] == "true") {
 		fmt.Print(CLEARSCREEN)
 	} else {
 		systemClearscreen()
@@ -26,7 +26,7 @@ func showErrorExit(error string) {
 }
 
 func printFormattedln(color Color, underline bool, invert bool, text string) {
-	if(useColor == true) {
+	if(config["usecolor"] == "true") {
 		colorcode := ""
 		if(underline == true) {
 			colorcode += "[4m"

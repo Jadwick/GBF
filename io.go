@@ -288,16 +288,19 @@ func loadConfig() bool {
 		}
 		return true
 	}
-	for key, value := range jsonMap {
-		switch key {
-			case "updateurl":
-				s, ok := value.(string)
-				if(ok == true) {
-					config["updateurl"] = s
-				}
-		}
-	}
 	file.Close()
+	val, ok := jsonMap["updateurl"]
+	if(ok == true) {
+		s := val.(string)
+		config["updateurl"] = s
+	}
+	val, ok = jsonMap["usecolor"]
+	if(ok == true) {
+		s := strings.ToLower(val.(string))
+		config["usecolor"] = s
+	} else {
+		initialSetup()
+	}
 	return false
 }
 

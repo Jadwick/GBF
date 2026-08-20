@@ -30,14 +30,15 @@ func installGNX() {
 	}
 	if(ver == "") { //if ver is empty, something needs updating
 		if(strings.Contains(id, "original")) {
-			printFormattedln(Red, false, true, "Old Goblin Nest version found")
-			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "Have: ", id))
-			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "Latest: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
+			printFormattedln(Red, false, true, "Out-of-date Goblin Nest version found")
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "You have: ", id))
+			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "But the latest are: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
 			gv, ok := compatable[id]
 			if(ok == true) {
-				msg := "Out-of-date GNX found for old version: " + gv
+				msg := "Compatable out-of-date GNX found: " + gv
 				printFormattedln(Green, false, false, msg)
-				printFormattedln(Purple, false, false, "Install old version?")
+				printFormattedln(Purple, false, false, "This version of GNX may be missing features and bugfixes from the latest release.")
+				printFormattedln(Purple, false, false, "Install this version anyway?")
 				ans := getYesNo(false)
 				if(ans == false) {
 					printFormattedln(Red, false, false, "User canceled install.")

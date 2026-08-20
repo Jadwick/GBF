@@ -8,7 +8,6 @@ var checksums = make(map[string]string)
 var urls = make(map[string]string)
 var compatable = make(map[string]string)
 var config = make(map[string]string)
-var useColor bool = true
 var downloadedChecksums = false
 var gbfJsonVersion string = ""
 var relExeDir string
@@ -25,7 +24,6 @@ func main() {
 	relDataDir = filepath.Join(relExeDir, DATADIR)
 	relModDir = filepath.Join(relExeDir, MODDIR)
 	datafile = filepath.Join(relExeDir, "data.win")
-	useColor = doesTerminalSupportColor()
 
 	latestVersions["original_itch"] = "original_itch_1.36"
 	latestVersions["original_steam"] = "original_steam_1.36b"
@@ -75,6 +73,7 @@ func main() {
 	compatable["original_steam_1.36b"] = "steam_1.3.11.4"
 
 	config["updateurl"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/gbf/checksums.json"
+	config["usecolor"] = "false"
 	if(len(os.Args) > 1) {
 		installMod(os.Args[1])
 	}

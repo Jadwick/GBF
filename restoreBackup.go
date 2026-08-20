@@ -20,7 +20,7 @@ func restoreBackup() {
 		msg := "Version " + id + " found."
 		printFormattedln(Red, false, false, msg)
 	}
-	printFormattedln(Green, false, false, "Checking backup data.win")
+	printFormattedln(Green, false, false, "Checking backups...")
 	var backuppaths []string
 	entries, err := os.ReadDir(relDataDir)
 	if(err != nil) {
@@ -44,7 +44,9 @@ func restoreBackup() {
 		options[k] = filepath.Base(v);
 	}
 	if(len(options) == 0) {
-		showErrorExit("Missing backup data.win")
+		printFormattedln(Red, false, false, "No backups found.")
+		waitForEnterKey()
+		return
 	}
 	printFormattedln(Purple, false, false, "Which version do you want to restore?")
 	choice := getOption(options)
