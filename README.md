@@ -13,7 +13,7 @@ GBF makes a backup of the original `data.win` that it uses for updating or unisn
 ## Latest downloads:
 
 ## Instructions
-- Download the latest release for your system (only Windows builds are tested)
+- Download the [latest release](https://github.com/Jadwick/GBF/releases) for your system (only Windows builds are tested)
 - Put the executable in the same directory as the `data.win` file. (The same folder as `GoblinNest.exe`)
   - If you have Goblin Nest on Steam, you can find this through *Manage -> Browse local files*
  <img width="175" height="152" alt="Screenshot 2026-08-14 003507" src="https://github.com/user-attachments/assets/9c84fbcc-7e60-42ec-bd5d-5753660fcac5" />
