@@ -27,8 +27,8 @@ func main() {
 
 	latestVersions["original_itch"] = "original_itch_1.36"
 	latestVersions["original_steam"] = "original_steam_1.36b"
-	latestVersions["patched_itch"] = "patched_itch_1.3.11.4"
-	latestVersions["patched_steam"] = "patched_steam_1.3.11.4"
+	latestVersions["patched_itch"] = "patched_itch_1.3.11.5"
+	latestVersions["patched_steam"] = "patched_steam_1.3.11.5"
 
 	checksums["b8dfaf992a2cd34b10f07bf3237961067bd315d7b1e6ff30dd8e1b003b953c58"] = "original_itch_1.33"
 	checksums["919a78483e6eea1eb0e008043ae0cd7cb9fca248a2d6a9a2323139aeb2c7ffde"] = "original_steam_1.33"
@@ -52,6 +52,8 @@ func main() {
 	checksums["4a9e0741d104f6884d04868c46f34fb0331be2a178535a8ee36277e8ac4a5f88"] = "patched_steam_1.3.11.3"
 	checksums["1bd74b92ec6978ef20b2a83f1dc53193636558f7c06dbbe7e92c8f8d72d211d7"] = "patched_itch_1.3.11.4"
 	checksums["89c6431d6a9977606c47a319dd9af8c22ce02ce0d9fb68db33f9cd304e45d097"] = "patched_steam_1.3.11.4"
+	checksums["66839d9a68d170f19136cfcd51a7d846fca3761c7a12ac49a3260ab73f7d3658"] = "patched_itch_1.3.11.5"
+	checksums["3241e5a45d611ca2663f17b253506d18aa425c28353fe67d6b42481d8c31a67f"] = "patched_steam_1.3.11.5"
 
 	urls["itch_1.3.11"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11_gn1.33_itch.fossil"
 	urls["steam_1.3.11"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11_gn1.33_steam.fossil"
@@ -63,14 +65,16 @@ func main() {
 	urls["steam_1.3.11.3"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11.3_gn1.36b_steam.fossil"
 	urls["itch_1.3.11.4"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11.4_gn1.36b_itch.fossil"
 	urls["steam_1.3.11.4"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11.4_gn1.36b_steam.fossil"
+	urls["itch_1.3.11.5"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11.5_gn1.36b_itch.fossil"
+	urls["steam_1.3.11.5"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/fossil/gnx1.3.11.5_gn1.36b_steam.fossil"
 
 	compatable["original_itch_1.33"] = "itch_1.3.11"
 	compatable["original_steam_1.33"] = "steam_1.3.11"
 	compatable["original_itch_1.35"] = "itch_1.3.11.1"
 	compatable["original_steam_1.35"] = "steam_1.3.11.1"
-	compatable["original_itch_1.36"] = "itch_1.3.11.4"
+	compatable["original_itch_1.36"] = "itch_1.3.11.5"
 	compatable["original_steam_1.36"] = "steam_1.3.11.2"
-	compatable["original_steam_1.36b"] = "steam_1.3.11.4"
+	compatable["original_steam_1.36b"] = "steam_1.3.11.5"
 
 	config["updateurl"] = "https://github.com/Jadwick/GNX-Delta-Archive/raw/refs/heads/master/gbf/checksums.json"
 	config["usecolor"] = "false"
