@@ -56,11 +56,6 @@ func initialize() {
 		printFormattedln(Purple, false, false, "https://github.com/Jadwick/GBF")
 	}
 	printFormattedln(Green, false, true, "   GBF initialized successfully. Launching...   ")
-	for k, v := range compatable {
-		msg := k + ": " + v
-		printFormattedln(Green, false, false, msg)
-	}
-	waitForEnterKey()
 	if(hadErrors == true) {
 		waitForEnterKey()
 	}
