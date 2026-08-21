@@ -5,7 +5,7 @@ const DATADIR = "gbf_data"
 const MODDIR = "GNX_mods"
 const CHECKSUMFILE = "checksums.json"
 const CONFIGFILE = "config.json"
-const GBF_VERSION = "1.1.0"
+const GBF_VERSION = "1.1.1"
 
 type Color int
 
