@@ -6,6 +6,7 @@ Goblin's Best Friend (GBF) is a simple utility to install and manage GNX install
 GBF can:
 - Install GNX on a vanilla game
 - Update GNX if previously installed by Goblin's Best Friend
+- Auto install mods with drag and drop
 
 GBF makes a backup of the original `data.win` that it uses for updating or unisntalling GNX.
 
@@ -25,13 +26,18 @@ GBF makes a backup of the original `data.win` that it uses for updating or unisn
 - After a successful installation **DO NOT use G3M** to launch your game
     - Run GoblinNest.exe itself, or launch directly through Steam
 
-<img width="267" height="149" alt="Screenshot 2026-08-14 003419" src="https://github.com/user-attachments/assets/83faadd4-25ec-4442-a200-cde3291d21be" />
+<img width="307" height="140" alt="Screenshot 2026-08-19 215007" src="https://github.com/user-attachments/assets/5492f215-b242-42b6-b7ea-4e7b89480dd9" />
 
 GBF will make a `gbf_data` folder to store backups, config files, and other data in.
 
 ## Installing Mods
-Mods need to be specifically for GNX. You can tell if they are because once unzipped, they will contain a manifest.json.
+Mods need to be specifically for GNX.
 
+### Auto-installing Mods
+As of v1.1.0 Goblin's Best Friend can auto-install mods for you! Simply drag and drop the zipped mod file onto the GBF executable, and GBF will read the mod file and place it in the correct directory.
+***
+
+### Manual Mod Install
 ### Ensure you have the correct folder structure
 When you unzip your mods they need to be placed in the correct location for GNX to read them.
 
