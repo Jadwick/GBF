@@ -6,16 +6,7 @@ import "path/filepath"
 func initialize() {
 	var hadErrors = false;
 	clearscreen()
-	ex, err := exists(filepath.Join(relDataDir, CONFIGFILE))
-	if(err != nil) {
-		showErrorExit(err.Error())
-	}
-	if(ex == false) {
-		initialSetup()
-	}
-	bErr := loadConfig()
-	hadErrors = hadErrors || bErr
-	printFormattedln(Green, false, true, "Initializing GBF")
+	printFormattedln(Green, false, true, "   Initializing GBF   ")
 
 	// ensure data.win exists in local directory
 	b, err := exists(datafile)
@@ -46,6 +37,15 @@ func initialize() {
 		showErrorExit("Permission Error.")
 	}
 
+	ex, err := exists(filepath.Join(relDataDir, CONFIGFILE))
+	if(err != nil) {
+		showErrorExit(err.Error())
+	}
+	if(ex == false) {
+		initialSetup()
+	}
+	bErr := loadConfig()
+	hadErrors = hadErrors || bErr
 	bErr = updateChecksums()
 	hadErrors = hadErrors || bErr
 	bErr = parseChecksums()
@@ -55,7 +55,12 @@ func initialize() {
 		printFormattedln(Red, false, true, "New version of GBF available. ")
 		printFormattedln(Purple, false, false, "https://github.com/Jadwick/GBF")
 	}
-	printFormattedln(Green, false, true, "GBF initialized successfully. Launching...")
+	printFormattedln(Green, false, true, "   GBF initialized successfully. Launching...   ")
+	for k, v := range compatable {
+		msg := k + ": " + v
+		printFormattedln(Green, false, false, msg)
+	}
+	waitForEnterKey()
 	if(hadErrors == true) {
 		waitForEnterKey()
 	}
@@ -63,7 +68,7 @@ func initialize() {
 
 func initialSetup() {
 	config["usecolor"] = "true"
-	printFormattedln(Green, false, false, "Running first launch setup (one-time).")
+	printFormattedln(Green, false, true, "Running first launch setup (one-time).")
 	printFormattedln(Purple, false, false, "Is the line above green, or do you only see weird numbers?")
 	options := make ([]string, 2)
 	options[0] = "I can see the different colors."

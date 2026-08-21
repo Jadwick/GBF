@@ -9,7 +9,7 @@ import "github.com/shadowspore/fossil-delta"
 
 func installGNX() {
 	clearscreen()
-	printFormattedln(Green, false, true, "Installing GNX")
+	printFormattedln(Green, false, true, "   Installing GNX   ")
 	printFormattedln(Green, false, false, "Checking data.win")
 	hash, err := getDataSHA256(datafile)
 	if(err != nil || hash == "") {
@@ -30,7 +30,7 @@ func installGNX() {
 	}
 	if(ver == "") { //if ver is empty, something needs updating
 		if(strings.Contains(id, "original")) {
-			printFormattedln(Red, false, true, "Out-of-date Goblin Nest version found")
+			printFormattedln(Red, false, true, " Out-of-date Goblin Nest version found ")
 			printFormattedln(Red, false, false, fmt.Sprintf("%s%s", "You have: ", id))
 			printFormattedln(Red, false, false, fmt.Sprintf("%s%s%s%s", "But the latest are: ", latestVersions["original_itch"], " or ", latestVersions["original_steam"]))
 			gv, ok := compatable[id]
@@ -165,7 +165,7 @@ func installGNX() {
 	} else {
 		printFormattedln(Red, false, true, "Unable to make 'GNX_mods' directory.")
 	}
-	printFormattedln(Green, false, true, "GNX installed successfully")
+	printFormattedln(Green, false, true, "   GNX installed successfully   ")
 	printFormattedln(Purple, false, false, "Drop mods onto GBF to auto-install them.")
 	waitForEnterKey()
 }

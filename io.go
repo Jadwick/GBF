@@ -226,30 +226,21 @@ func parseChecksums() bool {
 				m, ok := value.(map[string]interface{})
 				if(ok == true) {
 					for cs, id := range m {
-						_, exists := checksums[cs]
-						if (exists == false) {
-							checksums[cs] = id.(string)
-						}
+						checksums[cs] = id.(string)
 					}
 				}
 			case "urls":
 				m, ok := value.(map[string]interface{})
 				if(ok == true) {
 					for id, url := range m {
-						_, exists := urls[id]
-						if (exists == false) {
-							urls[id] = url.(string)
-						}
+						urls[id] = url.(string)
 					}
 				}
 			case "compatable":
 				m, ok := value.(map[string]interface{})
 				if(ok == true) {
 					for id, compat := range m {
-						_, exists := compatable[id]
-						if (exists == false) {
-							compatable[id] = compat.(string)
-						}
+						compatable[id] = compat.(string)
 					}
 				}
 		}

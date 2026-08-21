@@ -8,7 +8,7 @@ import "github.com/shadowspore/fossil-delta"
 
 func updateGNX() {
 	clearscreen()
-	printFormattedln(Green, false, true, "Updating GNX")
+	printFormattedln(Green, false, true, " Updating GNX ")
 	if(downloadedChecksums == false) {
 		printFormattedln(Red, false, false, "Checksums were not updated, continuing with latest known version.")
 	}
@@ -163,7 +163,7 @@ func updateGNX() {
 	} else {
 		printFormattedln(Red, false, true, "Unable to make 'GNX_mods' directory.")
 	}
-	printFormattedln(Green, false, true, "GNX installed successfully")
+	printFormattedln(Green, false, true, " GNX installed successfully ")
 	printFormattedln(Purple, false, false, "Drop mods onto GBF to auto-install them.")
 	waitForEnterKey()
 }

@@ -6,7 +6,7 @@ import "path/filepath"
 
 func restoreBackup() {
 	clearscreen()
-	printFormattedln(Green, false, true, "Restoring Backup")
+	printFormattedln(Green, false, true, "   Restoring Backup   ")
 	printFormattedln(Green, false, false, "Checking current data.win")
 	hash, err := getDataSHA256(datafile)
 	if(err != nil || hash == "") {
@@ -39,17 +39,21 @@ func restoreBackup() {
 			}
 	    }
 	}
-	var options []string = make([]string, len(backuppaths))
+	var options []string = make([]string, len(backuppaths) + 1)
 	for k, v := range backuppaths {
-		options[k] = filepath.Base(v);
+		options[k + 1] = filepath.Base(v);
 	}
-	if(len(options) == 0) {
+	if(len(options) == 1) {
 		printFormattedln(Red, false, false, "No backups found.")
 		waitForEnterKey()
 		return
 	}
+	options[0] = "<Cancel>"
 	printFormattedln(Purple, false, false, "Which version do you want to restore?")
 	choice := getOption(options)
+	if(choice == 0) {
+		return
+	}
 	backupfile := backuppaths[choice]
 	printFormattedln(Green, false, false, "Restoring original data.win")
 	backupdata, fErr := os.ReadFile(backupfile)
@@ -60,6 +64,6 @@ func restoreBackup() {
 	if(fErr != nil) {
 		showErrorExit("Overwrite data.win failed.")
 	}
-	printFormattedln(Green, false, true, "Restored backup successfully")
+	printFormattedln(Green, false, true, "   Restored backup successfully   ")
 	waitForEnterKey()
 }
