@@ -10,8 +10,6 @@ GBF can:
 
 GBF makes a backup of the original `data.win` that it uses for updating or unisntalling GNX.
 
-## Latest downloads:
-
 ## Instructions
 - Download the [latest release](https://github.com/Jadwick/GBF/releases) for your system (only Windows builds are tested)
 - Put the executable in the same directory as the `data.win` file. (The same folder as `GoblinNest.exe`)
