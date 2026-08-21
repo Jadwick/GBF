@@ -18,7 +18,7 @@ GBF makes a backup of the original `data.win` that it uses for updating or unisn
 
 - Run GBF
     - For Windows users, just double-click it
-    - For Linux users, you may need to make it executable first
+    - For Linux and MacOS users, you may need to make it executable first
 - At the main screen, press `1` then `<enter>` to select 'Install'
 - Follow the on-screen prompts, everything else should be automated
 - After a successful installation **DO NOT use G3M** to launch your game
