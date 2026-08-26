@@ -10,17 +10,15 @@ GBF can:
 
 GBF makes a backup of the original `data.win` that it uses for updating or unisntalling GNX.
 
-## Latest downloads:
-
 ## Instructions
-- Download the latest release for your system (only Windows builds are tested)
+- Download the [latest release](https://github.com/Jadwick/GBF/releases) for your system (only Windows builds are tested)
 - Put the executable in the same directory as the `data.win` file. (The same folder as `GoblinNest.exe`)
   - If you have Goblin Nest on Steam, you can find this through *Manage -> Browse local files*
  <img width="175" height="152" alt="Screenshot 2026-08-14 003507" src="https://github.com/user-attachments/assets/9c84fbcc-7e60-42ec-bd5d-5753660fcac5" />
 
 - Run GBF
     - For Windows users, just double-click it
-    - For Linux users, you may need to make it executable first
+    - For Linux and MacOS users, you may need to make it executable first
 - At the main screen, press `1` then `<enter>` to select 'Install'
 - Follow the on-screen prompts, everything else should be automated
 - After a successful installation **DO NOT use G3M** to launch your game
