@@ -295,6 +295,36 @@ func loadConfig() bool {
 	return false
 }
 
+func loadConfigSilent() {
+	fileExists, exist_err := exists(filepath.Join(relDataDir, CONFIGFILE))
+	if(exist_err != nil || fileExists == false) {
+		return
+	}
+	file, file_err := os.Open(filepath.Join(relDataDir, CONFIGFILE))
+	if(file_err != nil) {
+		return
+	}
+	var jsonMap map[string]interface{}
+	decoder := json.NewDecoder(file)
+	err := decoder.Decode(&jsonMap)
+	if (err != nil) {
+		file.Close()
+		return
+	}
+	file.Close()
+	val, ok := jsonMap["updateurl"]
+	if(ok == true) {
+		s := val.(string)
+		config["updateurl"] = s
+	}
+	val, ok = jsonMap["usecolor"]
+	if(ok == true) {
+		s := strings.ToLower(val.(string))
+		config["usecolor"] = s
+	}
+	return
+}
+
 func createConfig() {
 	fp := filepath.Join(relDataDir, CONFIGFILE)
 	file, file_err := os.Create(fp)

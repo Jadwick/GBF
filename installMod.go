@@ -9,12 +9,13 @@ import "strings"
 import "encoding/json"
 
 func installMod(path string) {
+    loadConfigSilent()
     runestring := []rune(path)
 
     last3 := string(runestring[len(runestring)-3:])
 
     if(last3 != "zip") {
-        showErrorExit("Filetype unsupported.")
+        showErrorExit("Only .zip is currently supported.")
     }
 
     b, err := exists(datafile)
@@ -125,7 +126,7 @@ func installMod(path string) {
 
     if(success == false) {
         cleandir(tempdir)
-        showErrorExit("No readable manifest found!")
+        showErrorExit("No readable manifest found! (Is this a GNX mod?)")
     }
 
     b, err = exists(modpath)

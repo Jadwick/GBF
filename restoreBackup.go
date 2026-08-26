@@ -54,7 +54,7 @@ func restoreBackup() {
 	if(choice == 0) {
 		return
 	}
-	backupfile := backuppaths[choice]
+	backupfile := backuppaths[choice - 1]
 	printFormattedln(Green, false, false, "Restoring original data.win")
 	backupdata, fErr := os.ReadFile(backupfile)
 	if(fErr != nil) {
