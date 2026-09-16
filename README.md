@@ -1,6 +1,10 @@
 # Goblin's Best Friend
 *a [GNX](https://github.com/MovaFlow/GNX) patcher utility.*
 
+# GBF is now obsolete, as GNX has it's own installer.
+
+
+
 Goblin's Best Friend (GBF) is a simple utility to install and manage GNX installations without using G3M. The goal was to make installing the modding framework GNX as **EASY** as possible.
 
 GBF can:
